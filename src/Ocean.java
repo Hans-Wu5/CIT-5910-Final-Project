@@ -7,6 +7,8 @@
  */
 public class Ocean implements OceanInterface {
 
+/////////////////////////////////////////--------------- Fields ---------------/////////////////////////////////////////
+
 	/**
 	 * A 10x10 2D array of Ships, which can be used to quickly determine which ship
 	 * is in any given location.
@@ -31,6 +33,8 @@ public class Ocean implements OceanInterface {
 	 */
 	protected int shipsSunk;
 
+///////////////////////////////////////////////////// Constructor //////////////////////////////////////////////////////
+
 	/**
 	 * Creates an "empty" ocean, filling every space in the <code>ships</code> array
 	 * with EmptySea objects. Should also initialize the other instance variables
@@ -39,6 +43,8 @@ public class Ocean implements OceanInterface {
 	public Ocean() {
 
 	}
+
+//////////////////////////////////////////////// placeAllShipsRandomly /////////////////////////////////////////////////
 
 	/**
 	 * Place all ten ships randomly on the (initially empty) ocean. Larger ships
@@ -51,10 +57,12 @@ public class Ocean implements OceanInterface {
 
 	}
 
+////////////////////////////////////////////////////// isOccupied //////////////////////////////////////////////////////
+
 	/**
 	 * Checks if this coordinate is not empty; that is, if this coordinate does not
 	 * contain an EmptySea reference.
-	 * 
+	 *
 	 * @param row    the row (0 to 9) in which to check for a floating ship
 	 * @param column the column (0 to 9) in which to check for a floating ship
 	 * @return {@literal true} if the given location contains a ship, and
@@ -63,6 +71,8 @@ public class Ocean implements OceanInterface {
 	public boolean isOccupied(int row, int column) {
 		return false;
 	}
+
+/////////////////////////////////////////////////////// shootAt ////////////////////////////////////////////////////////
 
 	/**
 	 * Fires a shot at this coordinate. This will update the number of shots that
@@ -80,12 +90,16 @@ public class Ocean implements OceanInterface {
 		return false;
 	}
 
+//////////////////////////////////////////////////// getShotsFired /////////////////////////////////////////////////////
+
 	/**
 	 * @return the number of shots fired in this game.
 	 */
 	public int getShotsFired() {
 		return this.shotsFired;
 	}
+
+////////////////////////////////////////////////////// getHitCount /////////////////////////////////////////////////////
 
 	/**
 	 * @return the number of hits recorded in this game.
@@ -94,12 +108,16 @@ public class Ocean implements OceanInterface {
 		return this.shotsFired;
 	}
 
+////////////////////////////////////////////////////// getShipSunk /////////////////////////////////////////////////////
+
 	/**
 	 * @return the number of ships sunk in this game.
 	 */
 	public int getShipsSunk() {
 		return this.shipsSunk;
 	}
+
+////////////////////////////////////////////////////// isGameOver //////////////////////////////////////////////////////
 
 	/**
 	 * @return {@literal true} if all ships have been sunk, otherwise
@@ -108,6 +126,8 @@ public class Ocean implements OceanInterface {
 	public boolean isGameOver() {
 		return false;
 	}
+
+///////////////////////////////////////////////////// getShipArray /////////////////////////////////////////////////////
 
 	/**
 	 * Provides access to the grid of ships in this Ocean. The methods in the Ship
@@ -121,6 +141,8 @@ public class Ocean implements OceanInterface {
 	public Ship[][] getShipArray() {
 		return null;
 	}
+
+///////////////////////////////////////////////////////// print ////////////////////////////////////////////////////////
 
 	/**
 	 * Prints the ocean. To aid the user, row numbers should be displayed along the
