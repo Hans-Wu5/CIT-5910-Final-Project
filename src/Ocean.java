@@ -41,7 +41,10 @@ public class Ocean implements OceanInterface {
 	 * appropriately.
 	 */
 	public Ocean() {
-
+		hitCount = 0;
+		shotsFired = 0;
+		shipsSunk = 0;
+		ships = new Ship[10][10];
 	}
 
 //////////////////////////////////////////////// placeAllShipsRandomly /////////////////////////////////////////////////

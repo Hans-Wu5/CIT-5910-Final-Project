@@ -29,8 +29,12 @@ public abstract class Ship {
 
 ///////////////////////////////////////////////////// Constructor //////////////////////////////////////////////////////
 
-    public Ship() {
-
+    public Ship(int length) {
+        this.length = length;
+        hit = new boolean[length]; //default false
+        bowColumn = -1;
+        bowRow = -1;
+        horizontal = false;
     }
 
 ///////////////////////////////////////////////////// getBowColumn /////////////////////////////////////////////////////
@@ -39,6 +43,9 @@ public abstract class Ship {
      * @return the column of the bow (front) of the ship
      */
     public int getBowColumn(){
+        if(bowColumn == -1){
+            System.out.println("Bow Column Not Initialized");
+        }
         return this.bowColumn;
     }
 
@@ -57,6 +64,9 @@ public abstract class Ship {
      * @return the row of the bow (front) of the ship
      */
     public int getBowRow(){
+        if(bowRow == -1){
+            System.out.println("Bow Row Not Initialized");
+        }
         return this.bowRow;
     }
 
@@ -104,8 +114,12 @@ public abstract class Ship {
      * @return true if every part of the ship is hit, false otherwise
      */
     public boolean isSunk() {
-        /// //CHANGE
-        return false;
+        for(boolean b : hit){
+            if(b){
+                return false;
+            }
+        }
+        return true;
     }
 
 //////////////////////////////////////////////////// okToPlaceShipAt ///////////////////////////////////////////////////
@@ -142,7 +156,10 @@ public abstract class Ship {
      * @param ocean - the Ocean in which this ship will be placed
      */
     public void placeShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-        /// /CHANGE
+        this.setBowRow(column);
+        this.setHorizontal(horizontal);
+        this.setHorizontal(horizontal);
+        //ocean
     }
 
 //////////////////////////////////////////////////////// shootAt ///////////////////////////////////////////////////////
@@ -158,8 +175,20 @@ public abstract class Ship {
      * otherwise
      */
     public boolean shootAt(int row, int column){
-        /// //////////CHANGE
-        return false;
+        if(this.isHorizontal()){
+            if(this.getBowRow() == row){
+                if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength()){
+                    hit[column-this.getBowColumn()] = true;
+                }
+            }
+        }else{
+            if(this.getBowColumn() == column){
+               if(row >= this.getBowRow() && row <= (this.getBowRow()+this.getLength())){
+                   hit[row-this.getBowRow()] = true;
+               }
+            }
+        }
+        return this.isSunk();
     }
 
 //////////////////////////////////////////////////////// toString ///////////////////////////////////////////////////////
@@ -177,7 +206,7 @@ public abstract class Ship {
     @Override
     public String toString() {
         //determine if the ship is sunk
-        if (isSunk()) {
+        if (this.isSunk()) {
             return "x";
         } else {
             return "S";
