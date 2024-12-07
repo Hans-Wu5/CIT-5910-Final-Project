@@ -36,6 +36,14 @@ public abstract class Ship {
         bowRow = -1;
         horizontal = false;
     }
+///////////////////////////////////////////////////// setBowColumn /////////////////////////////////////////////////////
+
+    /**
+     * @return the column of the bow (front) of the ship
+     */
+    public void stBowColumn(int bowColumn){
+        this.bowColumn = bowColumn;
+    }
 
 ///////////////////////////////////////////////////// getBowColumn /////////////////////////////////////////////////////
 
@@ -138,7 +146,7 @@ public abstract class Ship {
      * @return true if every part of the ship is hit, false otherwise
      */
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-        /// //CHANGE
+         //CHANGE
         return false;
     }
 
@@ -156,8 +164,8 @@ public abstract class Ship {
      * @param ocean - the Ocean in which this ship will be placed
      */
     public void placeShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-        this.setBowRow(column);
-        this.setHorizontal(horizontal);
+        this.setBowRow(row);
+        this.setBowColumn(column);
         this.setHorizontal(horizontal);
         //ocean
     }
@@ -177,7 +185,7 @@ public abstract class Ship {
     public boolean shootAt(int row, int column){
         if(this.isHorizontal()){
             if(this.getBowRow() == row){
-                if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength()){
+                if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength())){
                     hit[column-this.getBowColumn()] = true;
                 }
             }
