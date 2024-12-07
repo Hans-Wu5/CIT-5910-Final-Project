@@ -1,2 +1,21 @@
-public class Destroyer {
+/**
+ * @author: zihan wu & junxiang li
+ */
+
+public class Destroyer extends Ship{
+
+///////////////////////////////////////////////////// constructor //////////////////////////////////////////////////////
+
+    public Destroyer() {
+        //call superclass constructor with length 2
+        super(2);
+    }
+
+///////////////////////////////////////////////////// getShipType //////////////////////////////////////////////////////
+
+    @Override
+    public String getShipType() {
+        return "Destroyer";
+    }
+
 }

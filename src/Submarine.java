@@ -1,2 +1,21 @@
-public class Submarine {
+/**
+ * @author: zihan wu & junxiang li
+ */
+
+public class Submarine extends Ship{
+
+///////////////////////////////////////////////////// constructor //////////////////////////////////////////////////////
+
+    public Submarine() {
+        //call superclass constructor with length 1
+        super(1);
+    }
+
+///////////////////////////////////////////////////// getShipType //////////////////////////////////////////////////////
+
+    @Override
+    public String getShipType() {
+        return "Submarine";
+    }
+
 }

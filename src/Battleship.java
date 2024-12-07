@@ -1,2 +1,20 @@
-public class Battleship {
+/**
+ * @author: zihan wu & junxiang li
+ */
+
+public class Battleship extends Ship{
+
+///////////////////////////////////////////////////// constructor //////////////////////////////////////////////////////
+
+    public Battleship() {
+        //call superclass constructor with length 4
+        super(4);
+    }
+
+///////////////////////////////////////////////////// getShipType //////////////////////////////////////////////////////
+
+    @Override
+    public String getShipType() {
+        return "Battleship";
+    }
 }

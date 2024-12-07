@@ -1,2 +1,21 @@
-public class Cruiser {
+/**
+ * @author: zihan wu & junxiang li
+ */
+
+public class Cruiser extends Ship{
+
+///////////////////////////////////////////////////// constructor //////////////////////////////////////////////////////
+
+    public Cruiser() {
+        //call superclass constructor with length 3
+        super(3);
+    }
+
+///////////////////////////////////////////////////// getShipType //////////////////////////////////////////////////////
+
+    @Override
+    public String getShipType() {
+        return "Cruiser";
+    }
+
 }
