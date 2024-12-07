@@ -39,7 +39,7 @@ public abstract class Ship {
 ///////////////////////////////////////////////////// setBowColumn /////////////////////////////////////////////////////
 
     /**
-     * @return the column of the bow (front) of the ship
+     * return the column of the bow (front) of the ship
      */
     public void stBowColumn(int bowColumn){
         this.bowColumn = bowColumn;
