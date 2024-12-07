@@ -49,7 +49,7 @@ public class Ocean implements OceanInterface {
 			for (int j = 0; j < 10; j++) {
 				ships[i][j]= new EmptySea();
 				ships[i][j].setBowRow(i);
-				ships[i][j].getBowColumn(j);
+				ships[i][j].setBowColumn(j);
 			}
 		}
 	}
