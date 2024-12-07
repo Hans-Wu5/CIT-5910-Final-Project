@@ -39,7 +39,7 @@ public abstract class Ship {
 ///////////////////////////////////////////////////// setBowColumn /////////////////////////////////////////////////////
 
     /**
-     * return the column of the bow (front) of the ship
+     * @return the column of the bow (front) of the ship
      */
     public void setBowColumn(int bowColumn){
         this.bowColumn = bowColumn;
@@ -146,8 +146,28 @@ public abstract class Ship {
      * @return true if every part of the ship is hit, false otherwise
      */
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-         //CHANGE
-        return false;
+         //check if out of the boundary
+        if(row<0 || row>(ocean.ships.length-1) || column<0 || column>(ocean.ships[0].length-1)){
+            return false;
+        }
+        if(horizontal){
+            for(int i = row-1; i < row+1; i++){
+                for(int j = column-1; j < column+this.getLength()+1; j++){
+                    if(ocean.ships[i][j] instanceof EmptySea){
+                        return false;
+                    }
+                }
+            }
+        }else{
+            for(int i = row-1; i < row+this.getLength()+1; i++){
+                for(int j = column-1; j < column+1; j++){
+                    if(ocean.ships[i][j] instanceof EmptySea){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 ////////////////////////////////////////////////////// placeShipAt /////////////////////////////////////////////////////
@@ -167,7 +187,12 @@ public abstract class Ship {
         this.setBowRow(row);
         this.setBowColumn(column);
         this.setHorizontal(horizontal);
-        //ocean
+
+        if(horizontal){
+            for(int i = row; i < row + this.getLength(); i++){ocean.ships[i][column] = this;}
+        }else{
+            for(int j = column; j < column + this.getLength(); j++) {ocean.ships[row][j] = this;}
+        }
     }
 
 //////////////////////////////////////////////////////// shootAt ///////////////////////////////////////////////////////
@@ -221,4 +246,7 @@ public abstract class Ship {
         }
     }
 
+    public void placeShipAt(int randomRow, int randomCol, boolean randomHorizontal, Ocean ocean) {
+
+    }
 }
