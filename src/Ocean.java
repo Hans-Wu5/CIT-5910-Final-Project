@@ -242,7 +242,7 @@ public void print() {
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             if(this.ships[i][j] instanceof EmptySea){
-                if(this.ships[i][j].isSunk()) {
+                if(this.ships[i][j].hit[0]) {
                     table[i][j] = '-';
                 }else{
                     table[i][j] = '.'; // Unfired locations are initialized to '.'

@@ -149,14 +149,11 @@ public abstract class Ship {
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
         //if ship is horizontally placed
         if (horizontal) {
-            if (row < 0 || row > 9 || column + ocean.ships.length - 1 > 9 || column > 9) {
+            if (row < 0 || row > 9 || column + this.getLength() - 1 > 9 || column > 9) {
                 return false;
             }
-            for (int i = Math.max(0, row - 1); i <= Math.min(row + 1, 9); i+=2) {
-                for (int j = Math.max(0, column - ocean.ships.length); j <= Math.min(column + 1, 9); j++) {
-                    if (i == row && j <= column && j >= column - ocean.ships.length + 1) {
-                        continue;
-                    }
+            for (int i = Math.max(0, row - 1); i <= Math.min(row + 1, 9); i++) {
+                for (int j = Math.max(0, column-1); j <= Math.min(column + this.getLength(), 9); j++) {
                     if (!(ocean.ships[i][j] instanceof EmptySea)) {
                         return false;
                     }
@@ -164,14 +161,11 @@ public abstract class Ship {
             }
         //if ship is vertically placed
         } else {
-            if (row + ocean.ships.length -1 > 9 || row > 0 || column < 0 || column > 9) {
+            if ( row < 0 || row + this.getLength() -1 > 9 || column < 0 || column > 9) {
                 return false;
             }
-            for (int i = Math.max(0, row - ocean.ships.length); i <= Math.min(row + 1, 9); i++) {
+            for (int i = Math.max(0, row - 1); i <= Math.min(row + this.getLength(), 9); i++) {
                 for (int j = Math.max(0, column - 1); j <= Math.min(column + 1, 9); j++) {
-                    if (j == column && i <= row && i >= row - ocean.ships.length + 1) {
-                        continue;
-                    }
                     if (!(ocean.ships[i][j] instanceof EmptySea)) {
                         return false;
                     }
@@ -244,6 +238,8 @@ public abstract class Ship {
                     }
                 }
             }
+        }else{
+            this.hit[0] = true;
         }
         return false;
     }
