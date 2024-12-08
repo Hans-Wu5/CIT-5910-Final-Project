@@ -139,22 +139,23 @@ public boolean isOccupied(int row, int column) {
  * @return {@literal true} if the given location contains a float ship (not an
  *         EmptySea), {@literal false} if it does not.
  */
-public boolean shootAt(int row, int column) throws IllegalArgumentException {
-    //boundary check
-    if (row < 0 || row >= this.ships.length || column < 0 || column >= this.ships[row].length) {
-        throw new IllegalArgumentException("Invalid input: Input must be non-negative.");
-    }
+public boolean shootAt(int row, int column) {
     //increase the shot
     this.shotsFired++;
 
     //get result of ship shoot at
     boolean result = ships[row][column].shootAt(row, column);
     //return false for empty sea
-    if(ships[row][column] instanceof EmptySea) {return false;}
+    if(ships[row][column] instanceof EmptySea) {
+        System.out.println("Oops. You missed 😛");
+        return false;
+    }
 
     if(result) {
+        System.out.println("You just hit a ship!");
         this.hitCount++;
         if(ships[row][column].isSunk()){
+            System.out.println("You have sunk a " + this.ships[row][column].getShipType() + "!");
             this.shipsSunk++;
         }
     }
@@ -271,7 +272,7 @@ public void print() {
     }
 
     //print the column number
-    System.out.println("");
+    System.out.println();
     System.out.print("   ");
     for (int i = 0; i < 10; i++) {
         System.out.print(i+"  ");
