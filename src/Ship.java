@@ -153,16 +153,20 @@ public abstract class Ship {
         if(horizontal){
             for(int i = row-1; i < row+1; i++){
                 for(int j = column-1; j < column+this.getLength()+1; j++){
-                    if(ocean.ships[i][j] instanceof EmptySea){
-                        return false;
+                    if((i >= 0) || (j >= 0) || (i <= 9) || (j <= 9)){
+                        if(!(ocean.ships[i][j] instanceof EmptySea)){
+                            return false;
+                        }
                     }
                 }
             }
         }else{
             for(int i = row-1; i < row+this.getLength()+1; i++){
                 for(int j = column-1; j < column+1; j++){
-                    if(ocean.ships[i][j] instanceof EmptySea){
-                        return false;
+                    if((i >= 0) || (j >= 0) || (i <= 9) || (j <= 9)){
+                        if(!(ocean.ships[i][j] instanceof EmptySea)) {
+                            return false;
+                        }
                     }
                 }
             }
