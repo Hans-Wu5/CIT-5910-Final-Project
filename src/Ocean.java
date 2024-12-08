@@ -236,5 +236,5 @@ public boolean shootAt(int row, int column) {
         System.out.println();
     }
 
-
-}}
+	}
+}
