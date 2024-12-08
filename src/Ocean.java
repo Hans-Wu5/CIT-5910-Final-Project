@@ -11,78 +11,104 @@ public class Ocean implements OceanInterface {
 
 /////////////////////////////////////////--------------- Fields ---------------/////////////////////////////////////////
 
-	/**
-	 * A 10x10 2D array of Ships, which can be used to quickly determine which ship
-	 * is in any given location.
-	 */
-	protected Ship[][] ships;
+    /**
+     * A 10x10 2D array of Ships, which can be used to quickly determine which ship
+     * is in any given location.
+     */
+    protected Ship[][] ships;
 
 
-	/**
-	 * The total number of shots fired by the user
-	 */
-	protected int shotsFired;
+    /**
+     * The total number of shots fired by the user
+     */
+    protected int shotsFired;
 
-	/**
-	 * The number of times a shot hit a ship. If the user shoots the same part of a
-	 * ship more than once, every hit is counted, even though the additional "hits"
-	 * don't do the user any good.
-	 */
-	protected int hitCount;
+    /**
+     * The number of times a shot hit a ship. If the user shoots the same part of a
+     * ship more than once, every hit is counted, even though the additional "hits"
+     * don't do the user any good.
+     */
+    protected int hitCount;
 
-	/**
-	 * The number of ships totally sunk.
-	 *
-	 */
-	protected int shipsSunk;
+    /**
+     * The number of ships totally sunk.
+     *
+     */
+    protected int shipsSunk;
 
 ///////////////////////////////////////////////////// Constructor //////////////////////////////////////////////////////
 
-	/**
-	 * Creates an "empty" ocean, filling every space in the <code>ships</code> array
-	 * with EmptySea objects. Should also initialize the other instance variables
-	 * appropriately.
-	 */
-	public Ocean() {
-		this.hitCount = 0;
-		this.shotsFired = 0;
-		this.shipsSunk = 0;
+    /**
+     * Creates an "empty" ocean, filling every space in the <code>ships</code> array
+     * with EmptySea objects. Should also initialize the other instance variables
+     * appropriately.
+     */
+    public Ocean() {
+        this.hitCount = 0;
+        this.shotsFired = 0;
+        this.shipsSunk = 0;
 
-		this.ships = new Ship[10][10];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				ships[i][j]= new EmptySea();
-				ships[i][j].placeShipAt(i,j,false,this);
-			}
-		}
+        this.ships = new Ship[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                ships[i][j]= new EmptySea();
+                ships[i][j].placeShipAt(i,j,false,this);
+            }
+        }
 
-	}
+    }
 
 //////////////////////////////////////////////// placeAllShipsRandomly /////////////////////////////////////////////////
 
-	/**
-	 * Place all ten ships randomly on the (initially empty) ocean. Larger ships
-	 * must be placed before smaller ones to avoid cases where it may be impossible
-	 * to place the larger ships.
-	 *
-	 * @see java.util.Random
-	 */
-	public void placeAllShipsRandomly() {
-		Random random = new Random();
-		Battleship battleship = new Battleship();
-		int randomRow;
-		int randomCol;
-		boolean randomHorizontal;
-		do {
-			randomRow = random.nextInt(10);
-			randomCol = random.nextInt(10);
-			randomHorizontal = random.nextBoolean();
-		} while (!battleship.okToPlaceShipAt(randomRow, randomCol, randomHorizontal, this))
+    /**
+     * Place all ten ships randomly on the (initially empty) ocean. Larger ships
+     * must be placed before smaller ones to avoid cases where it may be impossible
+     * to place the larger ships.
+     *
+     * @see java.util.Random
+     */
+    public void placeAllShipsRandomly() {
+        Ship battleship = new Battleship();
+        this.placeOneShipRandomly(battleship);
+        Ship cruiser1 = new Cruiser();
+        Ship cruiser2 = new Cruiser();
+        placeOneShipRandomly(cruiser1);
+        placeOneShipRandomly(cruiser2);
+        Ship destroyer1 = new Destroyer();
+        Ship destroyer2 = new Destroyer();
+        Ship destroyer3 = new Destroyer();
+        placeOneShipRandomly(destroyer1);
+        placeOneShipRandomly(destroyer2);
+        placeOneShipRandomly(destroyer3);
+        Ship submarine1 = new Submarine();
+        Ship submarine2 = new Submarine();
+        Ship submarine3 = new Submarine();
+        Ship submarine4 = new Submarine();
+        placeOneShipRandomly(submarine1);
+        placeOneShipRandomly(submarine2);
+        placeOneShipRandomly(submarine3);
+        placeOneShipRandomly(submarine4);
+    }
 
 
-		battleship.placeShipAt(randomRow, randomCol, randomHorizontal, this);
-	}
-}
+    //to place a ship randomly
+    public void placeOneShipRandomly(Ship ship) {
+        Random random = new Random();
+        int randomRow;
+        int randomCol;
+        boolean randomHorizontal;
+
+        // randomly generate
+        do {
+            randomRow = random.nextInt(this.ships.length);
+            randomCol = random.nextInt(this.ships[randomRow].length);
+            randomHorizontal = random.nextBoolean();
+        } while (!ship.okToPlaceShipAt(randomRow, randomCol, randomHorizontal, this));
+
+        // 将船放置在有效位置
+        ship.placeShipAt(randomRow, randomCol, randomHorizontal, this);
+    }
+
 
 ////////////////////////////////////////////////////// isOccupied //////////////////////////////////////////////////////
 
@@ -96,7 +122,7 @@ public class Ocean implements OceanInterface {
  *         {@literal false} otherwise.
  */
 public boolean isOccupied(int row, int column) {
-	return false;
+    return !(this.ships[row][column] instanceof EmptySea);
 }
 
 /////////////////////////////////////////////////////// shootAt ////////////////////////////////////////////////////////
@@ -110,11 +136,29 @@ public boolean isOccupied(int row, int column) {
  *
  * @param row    the row (0 to 9) in which to shoot
  * @param column the column (0 to 9) in which to shoot
- * @return {@literal true} if the given location contains an afloat ship (not an
+ * @return {@literal true} if the given location contains a float ship (not an
  *         EmptySea), {@literal false} if it does not.
  */
-public boolean shootAt(int row, int column) {
-	return false;
+public boolean shootAt(int row, int column) throws IllegalArgumentException {
+    //boundary check
+    if (row < 0 || row >= this.ships.length || column < 0 || column >= this.ships[row].length) {
+        throw new IllegalArgumentException("Invalid input: Input must be non-negative.");
+    }
+    //increase the shot
+    this.shotsFired++;
+
+    //get result of ship shoot at
+    boolean result = ships[row][column].shootAt(row, column);
+    //return false for empty sea
+    if(ships[row][column] instanceof EmptySea) {return false;}
+
+    if(result) {
+        this.hitCount++;
+        if(ships[row][column].isSunk()){
+            this.shipsSunk++;
+        }
+    }
+    return result;
 }
 
 //////////////////////////////////////////////////// getShotsFired /////////////////////////////////////////////////////
@@ -123,7 +167,7 @@ public boolean shootAt(int row, int column) {
  * @return the number of shots fired in this game.
  */
 public int getShotsFired() {
-	return this.shotsFired;
+    return this.shotsFired;
 }
 
 ////////////////////////////////////////////////////// getHitCount /////////////////////////////////////////////////////
@@ -132,7 +176,7 @@ public int getShotsFired() {
  * @return the number of hits recorded in this game.
  */
 public int getHitCount() {
-	return this.shotsFired;
+    return this.hitCount;
 }
 
 ////////////////////////////////////////////////////// getShipSunk /////////////////////////////////////////////////////
@@ -141,7 +185,7 @@ public int getHitCount() {
  * @return the number of ships sunk in this game.
  */
 public int getShipsSunk() {
-	return this.shipsSunk;
+    return this.shipsSunk;
 }
 
 ////////////////////////////////////////////////////// isGameOver //////////////////////////////////////////////////////
@@ -151,7 +195,7 @@ public int getShipsSunk() {
  *         {@literal false}.
  */
 public boolean isGameOver() {
-	return false;
+    return (this.shipsSunk == 10);
 }
 
 ///////////////////////////////////////////////////// getShipArray /////////////////////////////////////////////////////
@@ -166,7 +210,7 @@ public boolean isGameOver() {
  * @return the 10x10 array of ships.
  */
 public Ship[][] getShipArray() {
-	return null;
+    return this.ships;
 }
 
 ///////////////////////////////////////////////////////// print ////////////////////////////////////////////////////////
@@ -192,7 +236,59 @@ public Ship[][] getShipArray() {
  *
  */
 public void print() {
+    //initialize a table to print later
+    char[][] table = new char[10][10];
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if(this.ships[i][j] instanceof EmptySea){
+                if(this.ships[i][j].isSunk()) {
+                    table[i][j] = '-';
+                }else{
+                    table[i][j] = '.'; // Unfired locations are initialized to '.'
+                }
+            }else {
+                if (this.ships[i][j].isSunk()) {
+                    table[i][j] = 'x';
+                } else {
+                    if(( this.ships[i][j]).isHorizontal()){
+                        if(this.ships[i][j].hit[j-this.ships[i][j].getBowColumn()]){
+                            table[i][j] = 'S';
+                        }else{
+                            table[i][j] = '.';
+                        }
+                    }else{
+                        if(this.ships[i][j].hit[i-this.ships[i][j].getBowRow()]){
+                            table[i][j] = 'S';
+                        }else{
+                            table[i][j] = '.';
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+
+
+
+    //print the column number
+    System.out.println(" ");
+    for (int i = 0; i < 10; i++) {
+        System.out.println(i+" ");
+    }
+    System.out.println();
+
+    //print row number and the value/state
+    for (int i = 0; i < 10; i++) {
+        System.out.println(i+" ");
+        for (int j = 0; j < 10; j++) {
+            System.out.print(table[i][j]+" ");
+        }
+        System.out.println();
+    }
 
 }
 
 }
+

@@ -143,7 +143,7 @@ public abstract class Ship {
      * @param horizontal - whether or not to have the ship facing to the left
      * @param ocean - the Ocean in which this ship might be placed
      *
-     * @return true if every part of the ship is hit, false otherwise
+     * @return true if it is valid to place this ship of this length in this location with this orientation, and false otherwise.
      */
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
          //check if out of the boundary
@@ -207,21 +207,32 @@ public abstract class Ship {
      * @return true if this ship hasn't been sunk and a part of this ship occupies the given row and column and false
      * otherwise
      */
+
+    //have some confusion with the prof, checking
     public boolean shootAt(int row, int column){
-        if(this.isHorizontal()){
-            if(this.getBowRow() == row){
-                if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength())){
-                    hit[column-this.getBowColumn()] = true;
+        if(!(this instanceof EmptySea)){
+
+            if(this.isHorizontal()){
+                if(this.getBowRow() == row){
+                    if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength())){
+                      if(!this.hit[column-this.getBowColumn()]) {
+                          this.hit[column - this.getBowColumn()] = true;
+                          return true;
+                      }
+                    }
+                }
+            }else {
+                if (this.getBowColumn() == column) {
+                    if (row >= this.getBowRow() && row <= (this.getBowRow() + this.getLength())) {
+                        if(!this.hit[row-this.getBowRow()]) {
+                            this.hit[row - this.getBowRow()] = true;
+                            return true;
+                        }
+                    }
                 }
             }
-        }else{
-            if(this.getBowColumn() == column){
-               if(row >= this.getBowRow() && row <= (this.getBowRow()+this.getLength())){
-                   hit[row-this.getBowRow()] = true;
-               }
-            }
         }
-        return this.isSunk();
+        return false;
     }
 
 //////////////////////////////////////////////////////// toString ///////////////////////////////////////////////////////
@@ -246,7 +257,5 @@ public abstract class Ship {
         }
     }
 
-    public void placeShipAt(int randomRow, int randomCol, boolean randomHorizontal, Ocean ocean) {
 
-    }
 }
