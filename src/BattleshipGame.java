@@ -1,5 +1,7 @@
 /**
  * This class sets up the basic logic of the game, manages user inputs, and displays the results
+ *
+ * @author zihan wu
  */
 
 import javax.swing.plaf.basic.BasicRootPaneUI;
@@ -9,8 +11,19 @@ public class BattleshipGame {
 
 /////////////////////////////////////////--------------- Fields ---------------/////////////////////////////////////////
 
+    /**
+     * The row number that the player would like to fire at
+     */
     private static int row;
+
+    /**
+     * The column number that the player would like to fire at
+     */
     private static int col;
+
+    /**
+     * Scanner for user input
+     */
     private static Scanner sc = new Scanner(System.in);
 
 ///////////////////////////////////////////////////////// main /////////////////////////////////////////////////////////

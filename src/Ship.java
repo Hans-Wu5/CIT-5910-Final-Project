@@ -1,3 +1,7 @@
+/**
+ * @author junxiangli & zihan wu
+ */
+
 public abstract class Ship {
 
 /////////////////////////////////////////--------------- Fields ---------------/////////////////////////////////////////
@@ -39,7 +43,7 @@ public abstract class Ship {
 ///////////////////////////////////////////////////// setBowColumn /////////////////////////////////////////////////////
 
     /**
-     * @return the column of the bow (front) of the ship
+     * Sets the column of the bow (front) of the ship
      */
     public void setBowColumn(int bowColumn){
         this.bowColumn = bowColumn;

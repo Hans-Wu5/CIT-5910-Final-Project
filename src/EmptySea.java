@@ -1,7 +1,16 @@
+/**
+ * Considered a type of Ship so that the Ocean's ship 2D array can consist of EmptySea references for empty tiles and
+ * proper ships for tiles with ships actually inside of them.
+ * @author zihan wu
+ */
+
 public class EmptySea extends Ship{
 
 ///////////////////////////////////////////////////// constructor //////////////////////////////////////////////////////
 
+    /**
+     * Sets the inherited length variable and initializes the hit array, based on the size of this Empty Sea (1 tiles).
+     */
     public EmptySea() {
         //call superclass constructor with length 4
         super(1);
@@ -9,6 +18,9 @@ public class EmptySea extends Ship{
 
 ///////////////////////////////////////////////////// getShipType //////////////////////////////////////////////////////
 
+    /**
+     * @return "empty", indicating that this is an Empty sea tile.
+     */
     @Override
     public String getShipType() {
         return "empty";
