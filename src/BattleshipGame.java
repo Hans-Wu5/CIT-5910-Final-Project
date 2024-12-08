@@ -25,16 +25,14 @@ public class BattleshipGame {
             Ocean ocean = new Ocean();
             ocean.placeAllShipsRandomly();
             ocean.print();
-            boolean allSunk = false;
             //shooting loop
-            while(!allSunk) {
+            while(!ocean.isGameOver()) {
                 inputCheckShoot();
                 ocean.shootAt(row, col);
                 ocean.print();
                 if(ocean.isGameOver()) {
                     System.out.println("🎉 Game over! Well done 🫡");
                     System.out.println("You fired " + ocean.getShotsFired() + " shots.");
-                    allSunk = true;
                 }
             }
             play = inputCheckYN();

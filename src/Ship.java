@@ -123,7 +123,7 @@ public abstract class Ship {
      */
     public boolean isSunk() {
         for(boolean b : hit){
-            if(b){
+            if(!b){
                 return false;
             }
         }
@@ -149,7 +149,7 @@ public abstract class Ship {
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
         //if ship is horizontally placed
         if (horizontal) {
-            if (row < 0 || row > 9 || column - ocean.ships.length + 1 < 0 || column > 9) {
+            if (row < 0 || row > 9 || column + ocean.ships.length - 1 > 9 || column > 9) {
                 return false;
             }
             for (int i = Math.max(0, row - 1); i <= Math.min(row + 1, 9); i+=2) {
@@ -164,7 +164,7 @@ public abstract class Ship {
             }
         //if ship is vertically placed
         } else {
-            if (row - ocean.ships.length + 1 < 0 || row > 9 || column < 0 || column > 9) {
+            if (row + ocean.ships.length -1 > 9 || row > 0 || column < 0 || column > 9) {
                 return false;
             }
             for (int i = Math.max(0, row - ocean.ships.length); i <= Math.min(row + 1, 9); i++) {
@@ -201,9 +201,9 @@ public abstract class Ship {
 
         for(int i = 0; i < this.getLength(); i++) {
             if(horizontal){
-                ocean.ships[row][column - i] = this;
+                ocean.ships[row][column + i] = this;
             } else {
-                ocean.ships[row - i][column] = this;
+                ocean.ships[row + i][column] = this;
             }
         }
     }
