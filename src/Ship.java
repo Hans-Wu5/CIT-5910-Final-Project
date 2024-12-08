@@ -143,30 +143,39 @@ public abstract class Ship {
      * @param horizontal - whether or not to have the ship facing to the left
      * @param ocean - the Ocean in which this ship might be placed
      *
-     * @return true if it is valid to place this ship of this length in this location with this orientation, and false otherwise.
+
+     * @return true if it is valid to place this ship of this length in this location with this orientation, and
+     * false otherwise.
      */
     public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
-         //check if out of the boundary
-        if(row<0 || row>(ocean.ships.length-1) || column<0 || column>(ocean.ships[0].length-1)){
-            return false;
-        }
-        if(horizontal){
-            for(int i = row-1; i < row+1; i++){
-                for(int j = column-1; j < column+this.getLength()+1; j++){
-                    if((i >= 0) || (j >= 0) || (i <= 9) || (j <= 9)){
-                        if(!(ocean.ships[i][j] instanceof EmptySea)){
-                            return false;
-                        }
+        //if ship is horizontally placed
+        if (horizontal) {
+            if (row < 0 || row > 9 || column - ocean.ships.length + 1 < 0 || column > 9) {
+                return false;
+            }
+            for (int i = Math.max(0, row - 1); i <= Math.min(row + 1, 9); i+=2) {
+                for (int j = Math.max(0, column - ocean.ships.length); j <= Math.min(column + 1, 9); j++) {
+                    if (i == row && j <= column && j >= column - ocean.ships.length + 1) {
+                        continue;
+                    }
+                    if (!(ocean.ships[i][j] instanceof EmptySea)) {
+                        return false;
                     }
                 }
             }
-        }else{
-            for(int i = row-1; i < row+this.getLength()+1; i++){
-                for(int j = column-1; j < column+1; j++){
-                    if((i >= 0) || (j >= 0) || (i <= 9) || (j <= 9)){
-                        if(!(ocean.ships[i][j] instanceof EmptySea)) {
-                            return false;
-                        }
+        //if ship is vertically placed
+        } else {
+            if (row - ocean.ships.length + 1 < 0 || row > 9 || column < 0 || column > 9) {
+                return false;
+            }
+            for (int i = Math.max(0, row - ocean.ships.length); i <= Math.min(row + 1, 9); i++) {
+                for (int j = Math.max(0, column - 1); j <= Math.min(column + 1, 9); j++) {
+                    if (j == column && i <= row && i >= row - ocean.ships.length + 1) {
+                        continue;
+                    }
+                    if (!(ocean.ships[i][j] instanceof EmptySea)) {
+                        return false;
+
                     }
                 }
             }
@@ -192,10 +201,14 @@ public abstract class Ship {
         this.setBowColumn(column);
         this.setHorizontal(horizontal);
 
-        if(horizontal){
-            for(int i = row; i < row + this.getLength(); i++){ocean.ships[i][column] = this;}
-        }else{
-            for(int j = column; j < column + this.getLength(); j++) {ocean.ships[row][j] = this;}
+
+        for(int i = 0; i < this.getLength(); i++) {
+            if(horizontal){
+                ocean.ships[row][column - i] = this;
+            } else {
+                ocean.ships[row - i][column] = this;
+            }
+
         }
     }
 
