@@ -49,6 +49,11 @@ public class BattleshipGame {
      */
     private static void instructions() {
         System.out.println("👋Hello! Welcome to single-player Battleship! ⚓️");
+        System.out.println("There are: ");
+        System.out.println("· 1 Battleship (length 1)");
+        System.out.println("· 2 Cruisers (length 2)");
+        System.out.println("· 3 Destroyers (length 3)");
+        System.out.println("· 4 Submarines (length 4)");
         System.out.println("Your goal is try to hit all of them. Good luck! 😬");
     }
 

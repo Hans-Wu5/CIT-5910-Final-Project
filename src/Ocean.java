@@ -105,7 +105,7 @@ public class Ocean implements OceanInterface {
             randomHorizontal = random.nextBoolean();
         } while (!ship.okToPlaceShipAt(randomRow, randomCol, randomHorizontal, this));
 
-        // 将船放置在有效位置
+        // placing ship
         ship.placeShipAt(randomRow, randomCol, randomHorizontal, this);
     }
 
@@ -250,7 +250,7 @@ public void print() {
                 if (this.ships[i][j].isSunk()) {
                     table[i][j] = 'x';
                 } else {
-                    if(( this.ships[i][j]).isHorizontal()){
+                    if((this.ships[i][j]).isHorizontal()){
                         if(this.ships[i][j].hit[j-this.ships[i][j].getBowColumn()]){
                             table[i][j] = 'S';
                         }else{
@@ -270,20 +270,19 @@ public void print() {
         }
     }
 
-
-
     //print the column number
-    System.out.println(" ");
+    System.out.println("");
+    System.out.print("   ");
     for (int i = 0; i < 10; i++) {
-        System.out.println(i+" ");
+        System.out.print(i+"  ");
     }
     System.out.println();
 
     //print row number and the value/state
     for (int i = 0; i < 10; i++) {
-        System.out.println(i+" ");
+        System.out.print(i+"  ");
         for (int j = 0; j < 10; j++) {
-            System.out.print(table[i][j]+" ");
+            System.out.print(table[i][j]+"  ");
         }
         System.out.println();
     }
