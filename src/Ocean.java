@@ -74,21 +74,40 @@ public class Ocean implements OceanInterface {
 
 /////////////////////////////////////////////////////// shootAt ////////////////////////////////////////////////////////
 
-	/**
-	 * Fires a shot at this coordinate. This will update the number of shots that
-	 * have been fired (and potentially the number of hits, as well). If a location
-	 * contains a real, not sunk ship, this method should return {@literal true}
-	 * every time the user shoots at that location. If the ship has been sunk,
-	 * additional shots at this location should return {@literal false}.
-	 * 
-	 * @param row    the row (0 to 9) in which to shoot
-	 * @param column the column (0 to 9) in which to shoot
-	 * @return {@literal true} if the given location contains an afloat ship (not an
-	 *         EmptySea), {@literal false} if it does not.
-	 */
-	public boolean shootAt(int row, int column) {
-		return false;
-	}
+/**
+ * Fires a shot at this coordinate. This will update the number of shots that
+ * have been fired (and potentially the number of hits, as well). If a location
+ * contains a real, not sunk ship, this method should return {@literal true}
+ * every time the user shoots at that location. If the ship has been sunk,
+ * additional shots at this location should return {@literal false}.
+ *
+ * @param row    the row (0 to 9) in which to shoot
+ * @param column the column (0 to 9) in which to shoot
+ * @return {@literal true} if the given location contains a float ship (not an
+ *         EmptySea), {@literal false} if it does not.
+ */
+public boolean shootAt(int row, int column) {
+    //increase the shot
+    this.shotsFired++;
+
+    //get result of ship shoot at
+    boolean result = ships[row][column].shootAt(row, column);
+    //return false for empty sea
+    if(ships[row][column] instanceof EmptySea) {
+        System.out.println("Oops. You missed 😛");
+        return false;
+    }
+
+    if(result) {
+        System.out.println("You just hit a ship!");
+        this.hitCount++;
+        if(ships[row][column].isSunk()){
+            System.out.println("You have sunk a " + this.ships[row][column].getShipType() + "!");
+            this.shipsSunk++;
+        }
+    }
+    return result;
+}
 
 //////////////////////////////////////////////////// getShotsFired /////////////////////////////////////////////////////
 
@@ -165,7 +184,57 @@ public class Ocean implements OceanInterface {
 	 * 
 	 */
 	public void print() {
+		//initialize a table to print later
+		char[][] table = new char[10][10];
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if(this.ships[i][j] instanceof EmptySea){
+					if(this.ships[i][j].isSunk()) {
+						table[i][j] = '-';
+					}else{
+						table[i][j] = '.'; // Unfired locations are initialized to '.'
+					}
+				}else {
+					if (this.ships[i][j].isSunk()) {
+						table[i][j] = 'x';
+					} else {
+						if(( this.ships[i][j]).isHorizontal()){
+							if(this.ships[i][j].hit[j-this.ships[i][j].getBowColumn()]){
+								table[i][j] = 'S';
+							}else{
+								table[i][j] = '.';
+							}
+						}else{
+							if(this.ships[i][j].hit[i-this.ships[i][j].getBowRow()]){
+								table[i][j] = 'S';
+							}else{
+								table[i][j] = '.';
+							}
+						}
 
-	}
 
-}
+					}
+				}
+			}
+		}
+
+
+    //print the column number
+    System.out.println();
+    System.out.print("   ");
+    for (int i = 0; i < 10; i++) {
+        System.out.print(i+"  ");
+    }
+    System.out.println();
+
+    //print row number and the value/state
+    for (int i = 0; i < 10; i++) {
+        System.out.print(i+"  ");
+        for (int j = 0; j < 10; j++) {
+            System.out.print(table[i][j]+"  ");
+        }
+        System.out.println();
+    }
+
+
+}}
