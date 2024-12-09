@@ -223,14 +223,13 @@ public abstract class Ship {
     //have some confusion with the prof, checking
     public boolean shootAt(int row, int column){
         if(!(this instanceof EmptySea)){
-
             if(this.isHorizontal()){
                 if(this.getBowRow() == row){
                     if(column >= this.getBowColumn() && column < (this.getBowColumn()+this.getLength())){
-                      if(!this.hit[column - this.getBowColumn()]) {
-                          this.hit[column - this.getBowColumn()] = true;
-                          return true;
+                        if(!this.hit[column - this.getBowColumn()]) {
+                            this.hit[column - this.getBowColumn()] = true;
                       }
+                      return true;
                     }
                 }
             }else {
@@ -238,8 +237,8 @@ public abstract class Ship {
                     if (row >= this.getBowRow() && row < (this.getBowRow() + this.getLength())) {
                         if(!this.hit[row - this.getBowRow()]) {
                             this.hit[row - this.getBowRow()] = true;
-                            return true;
                         }
+                        return true;
                     }
                 }
             }
