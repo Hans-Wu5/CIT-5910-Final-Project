@@ -40,6 +40,7 @@ public abstract class Ship {
         bowRow = -1;
         horizontal = false;
     }
+
 ///////////////////////////////////////////////////// setBowColumn /////////////////////////////////////////////////////
 
     /**
@@ -225,8 +226,8 @@ public abstract class Ship {
 
             if(this.isHorizontal()){
                 if(this.getBowRow() == row){
-                    if(column >= this.getBowColumn() && column <= (this.getBowColumn()+this.getLength())){
-                      if(!this.hit[column-this.getBowColumn()]) {
+                    if(column >= this.getBowColumn() && column < (this.getBowColumn()+this.getLength())){
+                      if(!this.hit[column - this.getBowColumn()]) {
                           this.hit[column - this.getBowColumn()] = true;
                           return true;
                       }
@@ -234,21 +235,21 @@ public abstract class Ship {
                 }
             }else {
                 if (this.getBowColumn() == column) {
-                    if (row >= this.getBowRow() && row <= (this.getBowRow() + this.getLength())) {
-                        if(!this.hit[row-this.getBowRow()]) {
+                    if (row >= this.getBowRow() && row < (this.getBowRow() + this.getLength())) {
+                        if(!this.hit[row - this.getBowRow()]) {
                             this.hit[row - this.getBowRow()] = true;
                             return true;
                         }
                     }
                 }
             }
-        }else{
+        } else {
             this.hit[0] = true;
         }
         return false;
     }
 
-//////////////////////////////////////////////////////// toString ///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////// toString //////////////////////////////////////////////////////
 
     /**
      * Returns a single character String to use in the Ocean's print method. This method should return "x" if the ship
