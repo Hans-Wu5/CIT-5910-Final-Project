@@ -147,32 +147,29 @@ public class Ocean implements OceanInterface {
         //increase the shot
         this.shotsFired++;
 
+        //compare before and after shoot
+        boolean beforeSunk = ships[row][column].isSunk();
+
         //get result of ship shoot at
         boolean result = ships[row][column].shootAt(row, column);
-
-        //check if ship is already sunk
-        boolean shipSunk = this.ships[row][column].isSunk();
-
         //return false for empty sea
         if(ships[row][column] instanceof EmptySea) {
             System.out.println("Oops. You missed 😛");
             return false;
         }
-
+        //if ship shoot at return true
         if(result) {
-            if(!shipSunk) {
-                System.out.println("You just hit a ship!");
-                this.hitCount++;
-                if(ships[row][column].isSunk()){
-                    System.out.println("You have sunk a " + this.ships[row][column].getShipType() + "!");
-                    this.shipsSunk++;
-                }
-                return true;
-            } else {
-                return false;
+            System.out.println("You just hit a ship!");
+            this.hitCount++;
+            if(ships[row][column].isSunk() ){
+                System.out.println("You have sunk a " + this.ships[row][column].getShipType() + "!");
+                this.shipsSunk++;
             }
+        }else{
+            System.out.println("You just hit a sunk ship!");
         }
-        return false;
+
+        return result;
     }
 
 //////////////////////////////////////////////////// getShotsFired /////////////////////////////////////////////////////

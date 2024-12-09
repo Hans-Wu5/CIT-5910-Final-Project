@@ -222,23 +222,26 @@ public abstract class Ship {
 
     //have some confusion with the prof, checking
     public boolean shootAt(int row, int column){
-        if(!(this instanceof EmptySea)){
-            if(this.isHorizontal()){
-                if(this.getBowRow() == row){
-                    if(column >= this.getBowColumn() && column < (this.getBowColumn()+this.getLength())){
-                        if(!this.hit[column - this.getBowColumn()]) {
-                            this.hit[column - this.getBowColumn()] = true;
-                      }
-                      return true;
+        if(!(this instanceof EmptySea)){ //is ship
+            if(this.isSunk()){
+                return false;
+            }
+            if(this.isHorizontal()){     //horizontoal
+                if(this.getBowRow() == row){ //row
+                    if(column >= this.getBowColumn() && column < (this.getBowColumn()+this.getLength())){ //column
+                        this.hit[column - this.getBowColumn()] = true;
+                        return true;
+                    }else{
+                        return false; //out of boundary
                     }
                 }
-            }else {
-                if (this.getBowColumn() == column) {
-                    if (row >= this.getBowRow() && row < (this.getBowRow() + this.getLength())) {
-                        if(!this.hit[row - this.getBowRow()]) {
-                            this.hit[row - this.getBowRow()] = true;
-                        }
+            }else {  //vertical
+                if (this.getBowColumn() == column) { //column
+                    if (row >= this.getBowRow() && row < (this.getBowRow() + this.getLength())) { //row
+                        this.hit[row - this.getBowRow()] = true;
                         return true;
+                    }else{ //out of boundary
+                        return false;
                     }
                 }
             }
