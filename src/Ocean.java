@@ -147,9 +147,6 @@ public class Ocean implements OceanInterface {
         //increase the shot
         this.shotsFired++;
 
-        //compare before and after shoot
-        boolean beforeSunk = ships[row][column].isSunk();
-
         //get result of ship shoot at
         boolean result = ships[row][column].shootAt(row, column);
         //return false for empty sea
@@ -244,9 +241,24 @@ public class Ocean implements OceanInterface {
      */
     public void print() {
         //initialize a table to print later
-        char[][] table = new char[10][10];
+        String[][] table = new String[10][10];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
+                if (this.ships[i][j].isHorizontal()) {
+                    if (this.ships[i][j].hit[j-this.ships[i][j].getBowColumn()]){
+                        table[i][j] = this.ships[i][j].toString();
+                    } else {
+                        table[i][j] = ".";
+                    }
+                } else {
+                    if(this.ships[i][j].hit[i-this.ships[i][j].getBowRow()]){
+                        table[i][j] = this.ships[i][j].toString();
+                    }else{
+                        table[i][j] = ".";
+                    }
+                }
+
+                /*
                 if(this.ships[i][j] instanceof EmptySea){
                     if(this.ships[i][j].hit[0]) {
                         table[i][j] = '-';
@@ -270,10 +282,8 @@ public class Ocean implements OceanInterface {
                                 table[i][j] = '.';
                             }
                         }
-
-
-                    }
-                }
+                   }
+                    */
             }
         }
 
