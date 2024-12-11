@@ -96,7 +96,7 @@ public class Ocean implements OceanInterface {
      *
      * @param ship - ship type that needs to be placed
      */
-    public void placeOneShipRandomly(Ship ship) {
+    private void placeOneShipRandomly(Ship ship) {
         Random random = new Random();
         int randomRow;
         int randomCol;
